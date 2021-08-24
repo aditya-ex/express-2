@@ -27,10 +27,7 @@ const AccessSchema = new Schema({
     type: String,
     required: true,
   },
-  //   expiry: {
-  //     type: String,
-  //     required: true,
-  //   },
+  expiry: {type: Date, default: Date.now, expires: 3600} 
 });
 const Access_Token = mongoose.model("Access_Token", AccessSchema);
 
@@ -66,7 +63,6 @@ app.post("/login", async (req, res) => {
     let access_token = md5(Date());
     user.access_token = access_token;
     user.save().then((doc) => res.status(201).send(doc));
-
     console.log(user);
   } catch (err) {
     console.log(err);
@@ -74,7 +70,7 @@ app.post("/login", async (req, res) => {
 });
 
 const checkAccessToken = (req, res, next) => {
-  const access_token = req.body.token || req.headers["access_token"];
+  const access_token = req.body.access_token || req.headers["access_token"];
   if (!access_token) {
     return res.status(403).send("a token is required");
   }
