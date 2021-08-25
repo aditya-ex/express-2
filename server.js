@@ -61,7 +61,9 @@ app.post("/login", async (req, res) => {
   try {
     const user = new Access_Token();
     user.user_id = req.body.user_id;
-    let access_token = jwt.sign({ user_id: user._id }, 'some_secret_key',{ expiresIn: "1h" });
+    let access_token = jwt.sign({ user_id: user._id }, "some_secret_key", {
+      expiresIn: "1h",
+    });
     // let access_token = md5(Date());
     user.access_token = access_token;
     user.save().then((doc) => res.status(201).send(doc));
