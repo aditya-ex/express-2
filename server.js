@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
-const md5 = require("md5");
+const jwt = require("jsonwebtoken");
+// const md5 = require("md5");
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,7 +28,7 @@ const AccessSchema = new Schema({
     type: String,
     required: true,
   },
-  expiry: {type: Date, default: Date.now, expires: 3600} 
+  // expiry: {type: Date, default: Date.now, expires: 3600}
 });
 const Access_Token = mongoose.model("Access_Token", AccessSchema);
 
@@ -60,7 +61,8 @@ app.post("/login", async (req, res) => {
   try {
     const user = new Access_Token();
     user.user_id = req.body.user_id;
-    let access_token = md5(Date());
+    let access_token = jwt.sign({ user_id: user._id }, 'some_secret_key',{ expiresIn: "1h" });
+    // let access_token = md5(Date());
     user.access_token = access_token;
     user.save().then((doc) => res.status(201).send(doc));
     console.log(user);
@@ -102,4 +104,4 @@ app.get("/user/get", checkAccessToken, async (req, res) => {
 });
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server up and running on port ${port} !`));
-// branch second
+// branch third
