@@ -104,6 +104,9 @@ app.get("/user/get", checkAccessToken, async (req, res) => {
     console.log(err);
   }
 });
+app.delete("/user/address", checkAccessToken,async(req, res)=>{
+  
+})
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server up and running on port ${port} !`));
 // branch third
