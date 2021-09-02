@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
 const express = require("express");
-const dotenv = require('dotenv').config();
 const bodyParser = require("body-parser");
 
-const users = require('./routes/api/users');
+const users = require('./routes/users');
 
 const app = express();
+
+require('dotenv').config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const db = process.env.URI;
-
 mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log("MongoDB successfully connected"))
