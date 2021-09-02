@@ -10,10 +10,6 @@ const AccessSchema = new Schema({
       type: String,
       required: true,
     },
-    address:[{
-      type: Schema.Types.ObjectId,
-      ref: "UserAddress"
-    }],
     createdAt: {
       type: Date, 
       expires: '1h',
@@ -42,7 +38,7 @@ const AccessSchema = new Schema({
     phone_no: {
       type: String,
       required: true,
-    },
+    }
   });
 
   const Access_Token = mongoose.model("Access_Token", AccessSchema);

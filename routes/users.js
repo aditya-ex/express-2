@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const md5 = require("md5");
 const {Access_Token, UserAddress} = require('../models/users');
-// const {UserAddress} = require('../models/');
 
 router.post("/login", async (req, res) => {
     try {
@@ -44,8 +43,8 @@ router.post("/login", async (req, res) => {
   });
   router.get("/get/:id", checkAccessToken, async (req, res) => {
     try {
-     let data = Access_Token.findOne({user_id: req.params.id}).populate("address");
-    //  res.status(201).send(data);
+     let data = await UserAddress.findOne({user_id: req.params.id}).populate();
+     res.status(201).send(data);
     console.log(data);
     } catch (err) {
       console.log(err);
